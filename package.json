@@ -2,6 +2,9 @@
   "name": "furry",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^17"
+  },
   "dependencies": {
     "@babel/core": "^7",
     "@babel/plugin-syntax-flow": "^7.18.6",
