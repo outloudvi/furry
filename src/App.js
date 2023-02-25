@@ -7,6 +7,7 @@ import RenderArea from './components/RenderArea'
 import Kuroshiro from 'kuroshiro'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { ModePolicies } from './modes'
+import { VAR_MODE, VAR_STRING } from './constants'
 
 function App() {
   const [mode, setMode] = useState(1)
@@ -17,6 +18,7 @@ function App() {
   const [result, setResult] = useState('')
 
   useEffect(() => {
+    // Initialize
     if (!kuroshiro.current || kuroshiro.current._analyzer) return
     kuroshiro.current
       .init(new KuromojiAnalyzer({ dictPath: 'dict/' }))
@@ -27,6 +29,34 @@ function App() {
         alert(e)
       })
   }, [])
+
+  useEffect(() => {
+    // Read settings from localStorage
+    try {
+      const _mode = localStorage.getItem(VAR_MODE)
+      if (_mode) {
+        setMode(Number(_mode))
+      }
+      const _text = localStorage.getItem(VAR_STRING)
+      if (_text) {
+        setText(_text)
+      }
+    } catch (e) {}
+  }, [])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(VAR_MODE, String(mode))
+    } catch (e) {}
+  }, [mode])
+
+  useEffect(() => {
+    try {
+      // Avoid localStorage to hit the storage limit
+      if (text.length > 5000000) return
+      localStorage.setItem(VAR_STRING, text)
+    } catch (e) {}
+  }, [text])
 
   useEffect(() => {
     if (!ready) return
