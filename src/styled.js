@@ -28,8 +28,9 @@ export const SectionInput = withStyle(Section, {
 
 export const SectionRender = withStyle(Section, {
   height: '75vh',
+  overflowY: 'scroll',
   [WIDE_SCREEN_BAROQUE]: {
-    height: 'unset',
+    height: '100%',
   },
 })
 
@@ -44,9 +45,4 @@ export const Header = styled('div', {
 export const Textarea = styled('textarea', {
   width: '100%',
   height: '100%',
-})
-
-export const RenderZone = styled('article', {
-  height: '100%',
-  overflowY: 'scroll',
 })

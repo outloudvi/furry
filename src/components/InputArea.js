@@ -1,6 +1,16 @@
 import { SectionInput, Textarea } from '../styled'
 
-const InputArea = ({ text, setText, disabled }) => {
+const getLineNumber = (position, text) => {
+  return text.slice(0, position).split('\n').length
+}
+
+const InputArea = ({ text, setText, disabled, setHilightArea }) => {
+  const onSelect = (e) => {
+    const selStart = e.target.selectionStart
+    const selEnd = e.target.selectionEnd
+    setHilightArea([getLineNumber(selStart, text), getLineNumber(selEnd, text)])
+  }
+
   return (
     <SectionInput>
       <Textarea
@@ -8,6 +18,7 @@ const InputArea = ({ text, setText, disabled }) => {
         onChange={(x) => {
           setText(x.target.value)
         }}
+        onSelect={onSelect}
         defaultValue={text}
       />
     </SectionInput>

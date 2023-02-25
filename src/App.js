@@ -15,7 +15,8 @@ function App() {
 
   const [ready, setReady] = useState(false)
   const kuroshiro = useRef(new Kuroshiro())
-  const [result, setResult] = useState('')
+  const [result, setResult] = useState([])
+  const [hilightArea, setHilightArea] = useState(null)
 
   useEffect(() => {
     // Initialize
@@ -68,7 +69,7 @@ function App() {
         })
       )
     ).then((lines) => {
-      setResult(lines.join('<br />'))
+      setResult(lines)
     })
   }, [ready, text, mode])
 
@@ -84,8 +85,13 @@ function App() {
         <ModeSettings mode={mode} setMode={setMode} />
       </Header>
       <Main>
-        <InputArea text={text} setText={setText} disabled={!ready} />
-        <RenderArea result={result} />
+        <InputArea
+          text={text}
+          setText={setText}
+          disabled={!ready}
+          setHilightArea={setHilightArea}
+        />
+        <RenderArea result={result} hilightArea={hilightArea} />
       </Main>
     </>
   )
